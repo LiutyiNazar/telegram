@@ -1,0 +1,7 @@
+Managment\MessageManagerDAO.class
+Telegram_DAO\NotesDAO.class
+Entities\UserEntity.class
+Telegram_DAO\UserDAO.class
+Entities\NotesEntity.class
+Managment\HibernateUtil.class
+FuriousBot.class
