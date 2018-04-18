@@ -16,9 +16,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Created by Лютий on 03.03.2018.
@@ -138,16 +140,10 @@ public class NotesDAO {
         }*/
 
         public List<String>  getFewNotesOfUser(long user_id, int limit){
-            List<String> list = new ArrayList<String>(limit);
+            List<String> list ;
             List<String> notes = getStringNotesByUserId(user_id);
-            int counter = 0;
-            if (limit > notes.size()) {
-                limit = notes.size()-1;
-            }
-            for(int i = limit; i > 0; i--){
-                list.add(notes.get(i));
-            }
-
+            list = notes.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList());
+            list = list.stream().limit(limit).collect(Collectors.toList());
             return list;
         }
 
