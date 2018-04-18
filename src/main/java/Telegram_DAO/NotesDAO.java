@@ -3,6 +3,7 @@ package Telegram_DAO;
 import Entities.NotesEntity;
 import Entities.UserEntity;
 import Managment.HibernateUtil;
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
@@ -15,10 +16,7 @@ import javax.print.DocFlavor;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -140,11 +138,26 @@ public class NotesDAO {
         }*/
 
         public List<String>  getFewNotesOfUser(long user_id, int limit){
-            List<String> list ;
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.setHibernateFlushMode(FlushMode.COMMIT);
+            session.flush();
+            session.getTransaction().commit();
+            session.close();
+
+            List<String> result = new ArrayList<>();
             List<String> notes = getStringNotesByUserId(user_id);
-            list = notes.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList());
-            list = list.stream().limit(limit).collect(Collectors.toList());
-            return list;
+          //  notes.stream().forEach(System.out::println);
+            int size = notes.size();
+            if (size< limit){
+                limit = size;
+            }
+            for (int i = size - 1; i>size - 1 - limit; i--){
+                    result.add(notes.get(i));
+            }
+
+           // result.stream().forEach(System.out::println);
+            return result;
         }
 
 

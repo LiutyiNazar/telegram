@@ -141,6 +141,6 @@ public class FuriousBot extends TelegramLongPollingBot {
     }
 
     public String getBotToken() {
-        return "******************";
+        return "************";
     }
 }

@@ -17,6 +17,9 @@
         <!-- <property name="hbm2ddl.auto">update</property> -->
         <property name="hbm2ddl.auto">update</property>
 
+        <property name="connection.autocommit">true</property>
+        <property name="hibernate.connection.autocommit">true</property>
+
 
 
         <mapping class="Entities.NotesEntity"/>
